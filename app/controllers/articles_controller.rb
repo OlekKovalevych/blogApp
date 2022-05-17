@@ -4,6 +4,7 @@ class ArticlesController < ApplicationController
   # GET /articles or /articles.json
   def index
     @articles = Article.all
+    render :index
   end
 
   # GET /articles/1 or /articles/1.json
@@ -12,16 +13,20 @@ class ArticlesController < ApplicationController
 
   # GET /articles/new
   def new
-    @article = Article.new
+    @user = User.find(params[:user_id])
+    @article = @user.articles.new
+    render :new #Article.new
   end
 
   # GET /articles/1/edit
   def edit
+
   end
 
   # POST /articles or /articles.json
   def create
-    @article = Article.new(article_params)
+    @user = User.find(params:[id])
+    @article=@user.articles.create(article_params)
 
     respond_to do |format|
       if @article.save
