@@ -2,6 +2,7 @@
 
 class ArticlesController < ApplicationController
   before_action :set_article, only: %i[show edit update destroy]
+  before_action :set_user
 
   # GET /articles or /articles.json
   def index
@@ -25,11 +26,11 @@ class ArticlesController < ApplicationController
 
   # POST /articles or /articles.json
   def create
-    @article = user.articles.create(article_params)
+    @article = @user.articles.create(article_params)
 
     respond_to do |format|
       if @article.save
-        format.html { redirect_to user_articles_url(@article), notice: 'Article was successfully created.' }
+        format.html { redirect_to user_articles_url(@user), notice: 'Article was successfully created.' }
         format.json { render :show, status: :created, location: @article }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -68,12 +69,12 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
   end
 
-  def user
+  def set_user
     @user = User.find(params[:user_id])
   end
 
   # Only allow a list of trusted parameters through.
   def article_params
-    params.require(:article).permit(:title, :body)
+    params.permit(:title, :body)
   end
 end

@@ -3,4 +3,5 @@
 <%= render 'form', user: @user %>
 
 <%= link_to 'Show', @user %> |
+<%= link_to 'Destroy', user_path(@user), method: :delete, remote: true %>|
 <%= link_to 'Back', users_path %>
