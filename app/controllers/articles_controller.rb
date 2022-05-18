@@ -10,9 +10,7 @@ class ArticlesController < ApplicationController
   end
 
   # GET /articles/1 or /articles/1.json
-  def show
-    user
-  end
+  def show; end
 
   # GET /articles/new
   def new
@@ -27,7 +25,6 @@ class ArticlesController < ApplicationController
   # POST /articles or /articles.json
   def create
     @article = @user.articles.create(article_params)
-
     respond_to do |format|
       if @article.save
         format.html { redirect_to user_articles_url(@user), notice: 'Article was successfully created.' }
@@ -42,8 +39,8 @@ class ArticlesController < ApplicationController
   # PATCH/PUT /articles/1 or /articles/1.json
   def update
     respond_to do |format|
-      if @article.update(article_params)
-        format.html { redirect_to user_article_url(@article), notice: 'Article was successfully updated.' }
+      if @article.update(params[:title, :body])
+        format.html { redirect_to user_articles_url(@user), notice: 'Article was successfully updated.' }
         format.json { render :show, status: :ok, location: @article }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -75,6 +72,6 @@ class ArticlesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def article_params
-    params.permit(:title, :body)
+    params.require(:article).permit(:title, :body)
   end
 end

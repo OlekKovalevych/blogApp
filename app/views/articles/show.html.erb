@@ -2,7 +2,7 @@
 
 <p>
   <strong>User:</strong>
-  <%="#{@user.name}   #{@user.surname}"%>
+  <%="Name: #{@user.name}   Surname: #{@user.surname}"%>
 </p>
 <p>
 
@@ -16,5 +16,5 @@
   <%= @article.body %>
 </p>
 
-<%= link_to 'Edit', edit_user_article_path(@article) %> |
+<%= link_to 'Edit', edit_user_article_path(@user) %> |
 <%= link_to 'Back', user_articles_path %>
