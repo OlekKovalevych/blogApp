@@ -39,7 +39,7 @@ class ArticlesController < ApplicationController
   # PATCH/PUT /articles/1 or /articles/1.json
   def update
     respond_to do |format|
-      if @article.update(params[:title, :body])
+      if @article.update(article_params)
         format.html { redirect_to user_articles_url(@user), notice: 'Article was successfully updated.' }
         format.json { render :show, status: :ok, location: @article }
       else
@@ -52,9 +52,8 @@ class ArticlesController < ApplicationController
   # DELETE /articles/1 or /articles/1.json
   def destroy
     @article.destroy
-
     respond_to do |format|
-      format.html { redirect_to user_articles_url, notice: 'Article was successfully destroyed.' }
+      format.html { redirect_to user_articles_url(@user), notice: 'Article was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
