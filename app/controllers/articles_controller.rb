@@ -16,7 +16,6 @@ class ArticlesController < ApplicationController
   def new
     @user = User.find(params[:user_id])
     @article = @user.articles.new
-    # render :new #Article.new
   end
 
   # GET /articles/1/edit
