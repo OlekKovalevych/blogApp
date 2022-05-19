@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Article, type: :model do
   subject { Article.new(title: 'Article', body: 'Test Article') }
-  it 'Is not valid when body length lites 10' do
+  it 'Is not valid when body length more 10' do
     subject.body = 'AS'
     expect(subject).to_not be_valid, 'I valid'
   end
