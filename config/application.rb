@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
+
+require 'devise'
 
 require 'rails/all'
 
@@ -21,7 +25,6 @@ module BlogApp
                        helper_specs: false,
                        routing_specs: false,
                        request_specs: false
-
     end
   end
 end
