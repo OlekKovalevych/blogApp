@@ -14,7 +14,6 @@ class ArticlesController < ApplicationController
 
   # GET /articles/new
   def new
-    @user = User.find(params[:user_id])
     @article = @user.articles.new
   end
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show update destroy]
+  before_action :set_user, only: %i[show edit update destroy]
 
   # GET /users or /users.json
   def index
@@ -17,10 +17,7 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1/edit
-  def edit
-    @user = User.find(params[:id])
-    render :edit
-  end
+  def edit; end
 
   # POST /users or /users.json
   def create

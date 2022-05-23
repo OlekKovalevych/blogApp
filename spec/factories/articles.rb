@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :article do
-    title { 'Article title' }
-    body { 'By First name  ' }
+    title { Faker::Books.title }
+    body { Faker::Lorem.paragraph }
   end
 end

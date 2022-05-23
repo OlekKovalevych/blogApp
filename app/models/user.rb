@@ -1,6 +1,6 @@
-class User < ApplicationRecord
-  has_many :articles, dependent: :destroy
+# frozen_string_literal: true
 
+class User < ApplicationRecord
   validates :name, presence: true
   validates :surname, presence: true
 end

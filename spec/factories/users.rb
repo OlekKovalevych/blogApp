@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :user do
-    name { 'Oleksandr' }
-    surname { 'Kova' }
+    name { Faker::Name.first_name }
+    surname { Faker::Name.last_name }
   end
 end

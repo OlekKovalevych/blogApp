@@ -3,24 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-
-  before(:each) do
-    @user = User.new(
-      name: 'Test',
-      surname: 'User'
-    )
+  describe 'relationships' do
+    it { is_expected.to have_many(:articles).dependent(:destroy) }
   end
 
-  it 'is valid with a name and surname' do
-    expect(FactoryBot.build(:user)).to be_valid
+  describe 'validations' do
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:surname) }
   end
-
-  it 'is invalid without a first name' do
-    expect(FactoryBot.build(:user, name: nil)).to_not be_valid, 'is valid'
-  end
-
-  it 'is invalid without a surname' do
-    expect(FactoryBot.build(:user, surname: nil)).to_not be_valid, 'is valid'
-  end
-
 end

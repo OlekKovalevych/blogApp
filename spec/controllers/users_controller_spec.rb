@@ -3,54 +3,60 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+
+  let(:valid_user_params) do
+    { user: { name: 'Name', surname: 'Surname' } }
+  end
+  let(:invalid_user_params) do
+    { user: { name: nil, surname: 'Surname' } }
+  end
+
   describe '[GET] #index' do
-    it 'returns a successful response' do
-      get :index
-      expect(response).to be_successful
-    end
-    it 'returns a 200 response' do
-      get :index
-      expect(response).to have_http_status '200'
+    context 'with successful response' do
+      before { get :index }
+
+      it do
+        expect(response).to be_successful
+        expect(response).to have_http_status '200'
+        expect(response).to render_template(:index)
+      end
     end
   end
 
   describe '[GET] #show' do
-    before do
-      @user = FactoryBot.create(:user)
-      get :show, params: { id: @user.id }
-    end
+    context 'with successful response' do
+      let(:user) { create :user }
+      before { get :show, params: { id: user.id } }
 
-    it 'responds successfully' do
-      expect(response).to be_successful
+      it do
+        expect(response).to be_successful
+        expect(response).to have_http_status '200'
+        expect(response).to render_template(:show)
+      end
     end
   end
 
-
-  # Expected response to be a redirect to <http://test.host/users/3> but was a redirect to <http://test.host/users/4>.
   describe '[POST] #create' do
-    before do
-      @user = FactoryBot.create(:user)
+
+    context 'with successful response' do
+      before { post :create, params: valid_user_params }
+
+      it { expect(response).to redirect_to user_path(id: User.last.id) }
     end
+    context 'with error' do
+      before { post :create, params: invalid_user_params }
 
-    it 'responds successfully' do
-      post(:create, params: { user: FactoryBot.attributes_for(:user) })
-      expect(response).to redirect_to user_path(@user.id)
+      it { expect(response).to render_template(:new) }
     end
   end
-end
 
-describe '[PATH] #update' do
-=begin
-  before do
-    @user = FactoryBot.create(:user)
+  describe '[PATH] #update' do
+    context 'with successful response' do
+      let(:user) { create :user }
+      before { patch :update, params: valid_user_params }
+      it { expect(response).to redirect_to user_path(id: user.id) }
+    end
   end
-  it 'user successfully update' do
-    patch(:update, params: { user: { name: 'Name', surname: 'ERE' } })
-    expect(@user.reload.name).to eq 'Name'
-  end
-=end
-end
 
-describe '[DELETE] destroy' do
-  it 'user successfully destroy'
+  describe '[DELETE] destroy'
 end
