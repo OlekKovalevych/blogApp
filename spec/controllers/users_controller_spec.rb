@@ -10,6 +10,9 @@ RSpec.describe UsersController, type: :controller do
   let(:invalid_user_params) do
     { user: { name: nil, surname: 'Surname' } }
   end
+  let(:update_user_params) do
+    { id: user.id, user: { name: 'Name', surname: 'Surname' } }
+  end
 
   describe '[GET] #index' do
     context 'with successful response' do
@@ -53,7 +56,7 @@ RSpec.describe UsersController, type: :controller do
   describe '[PATH] #update' do
     context 'with successful response' do
       let(:user) { create :user }
-      before { patch :update, params: valid_user_params }
+      before { put :update, params: update_user_params }
       it { expect(response).to redirect_to user_path(id: user.id) }
     end
   end
