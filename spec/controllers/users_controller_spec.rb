@@ -21,7 +21,6 @@ RSpec.describe UsersController, type: :controller do
 
   describe '[GET] #show' do
     context 'with successful response' do
-      let(:user) { create :user }
       before { get :show, params: { id: user.id } }
 
       it do

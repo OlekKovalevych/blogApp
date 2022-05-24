@@ -14,7 +14,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles/new
   def new
-    @article = @user.articles.new
+    @article = Article.new(user_id: @user.id)
   end
 
   # GET /articles/1/edit
@@ -22,7 +22,8 @@ class ArticlesController < ApplicationController
 
   # POST /articles or /articles.json
   def create
-    @article = @user.articles.create(article_params)
+    @article = Article.new(article_params)
+    @article.user_id = @user.id
     respond_to do |format|
       if @article.save
         format.html { redirect_to user_articles_url(@user), notice: 'Article was successfully created.' }

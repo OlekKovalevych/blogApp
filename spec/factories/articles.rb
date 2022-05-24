@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :article do
-    title { Faker::Books.title }
+    title { Faker::Book.title }
     body { Faker::Lorem.paragraph }
   end
 end
