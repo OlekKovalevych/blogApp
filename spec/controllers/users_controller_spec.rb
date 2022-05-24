@@ -43,9 +43,9 @@ RSpec.describe UsersController, type: :controller do
 
   describe '[POST] #create' do
     context 'with successful response' do
-      before { post :create, params: valid_user_params }
-
-      it { expect(response).to redirect_to user_path(id: User.last.id) }
+      let(:create_user) { post :create, params: valid_user_params }
+      it { expect(create_user).to redirect_to user_path(id: User.last.id) }
+      it { expect { create_user }.to change(User, :count).by(1) }
     end
     context 'with error' do
       before { post :create, params: invalid_user_params }
@@ -68,8 +68,11 @@ RSpec.describe UsersController, type: :controller do
 
   describe '[DELETE] destroy' do
     context 'with successful response' do
-      before { delete :destroy, params: valid_update_user_params }
-      it { expect(response).to redirect_to users_path }
+      let(:delete_user) { delete :destroy, params: valid_update_user_params }
+      # problem with change by(0)
+      it { expect { delete_user }.to change(User, :count).by(0) }
+      it { expect(delete_user).to redirect_to users_path }
     end
   end
 end
+

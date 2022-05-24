@@ -78,7 +78,7 @@ RSpec.describe ArticlesController, type: :controller do
     context 'with successfully ' do
       let(:delete_article) { delete :destroy, params: { user_id: user.id, id: article.id } }
       it { expect(delete_article).to redirect_to user_articles_path(user_id: user.id) }
-      it { expect(delete_article).to change(Article, :count).by(1) }
+      it { expect { delete_article }.to change(Article, :count).by(-1) }
     end
   end
 end
