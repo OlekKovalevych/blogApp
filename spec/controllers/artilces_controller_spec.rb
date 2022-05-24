@@ -46,12 +46,10 @@ RSpec.describe ArticlesController, type: :controller do
 
   describe '[POST] #create' do
     context 'with successful response' do
-      before do
-        post :create, params: valid_article_params
-      end
+      let(:create_request) { post :create, params: valid_article_params }
 
-      it { expect(response).to redirect_to user_articles_url(user_id: article.user_id) }
-      it { expect { response }.to change(Article.count).from(0).to(1) }
+      it { expect(create_request).to redirect_to user_articles_url(user_id: article.user_id) }
+      it { expect { create_request }.to change(Article, :count).by(1) }
     end
 
     context 'with error' do
@@ -76,10 +74,11 @@ RSpec.describe ArticlesController, type: :controller do
     end
   end
 
-  describe '[DELETE] destroy' do
+  describe '[DELETE] #destroy' do
     context 'with successfully ' do
-      before { delete :destroy, params: { id: article.id } }
+      let(:delete_article) { delete :destroy, params: { user_id: user.id, id: article.id } }
+      it { expect(delete_article).to redirect_to user_articles_path(user_id: user.id) }
+      it { expect(delete_article).to change(Article, :count).by(1) }
     end
-    it { expect(response).to redirect_to user_articles_path(user_id: user.id) }
   end
 end
