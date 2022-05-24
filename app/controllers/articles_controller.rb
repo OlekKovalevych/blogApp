@@ -21,6 +21,7 @@ class ArticlesController < ApplicationController
   def edit; end
 
   # POST /articles or /articles.json
+  # @return [Object Articles]
   def create
     @article = Article.new(article_params)
     @article.user_id = @user.id
