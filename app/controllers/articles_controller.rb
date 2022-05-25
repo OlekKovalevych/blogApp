@@ -21,10 +21,8 @@ class ArticlesController < ApplicationController
   def edit; end
 
   # POST /articles or /articles.json
-  # @return [Object Articles]
   def create
-    @article = Article.new(article_params)
-    @article.user_id = @user.id
+    @article = Article.new(article_params.merge(user_id: @user.id))
     respond_to do |format|
       if @article.save
         format.html { redirect_to user_articles_url(@user), notice: 'Article was successfully created.' }
