@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-  let(:user) { create :user }
+  let!(:user) { create :user }
   let(:valid_update_user_params) do
     { id: user.id, user: { name: 'Name', surname: 'Surname' } }
   end
   let(:valid_user_params) do
-    { user: { name: 'Name', surname: 'Surname' } }
+    { user: { name: 'Kup', surname: 'Jerevan' } }
   end
   let(:invalid_user_params) do
     { user: { name: nil, surname: 'Surname' } }
@@ -44,6 +44,8 @@ RSpec.describe UsersController, type: :controller do
   describe '[POST] #create' do
     context 'with successful response' do
       let(:create_user) { post :create, params: valid_user_params }
+      it { expect(User.last.name).to eql(valid_user_params[:user][:name]) }
+      it { expect(User.last.surname).to eql(valid_user_params[:user][:surname]) }
       it { expect(create_user).to redirect_to user_path(id: User.last.id) }
       it { expect { create_user }.to change(User, :count).by(1) }
     end
@@ -58,6 +60,8 @@ RSpec.describe UsersController, type: :controller do
     context 'with successful response' do
       before { put :update, params: valid_update_user_params }
       it { expect(response).to redirect_to user_path(id: user.id) }
+      it { expect(User.last.name).to eql(valid_update_user_params[:user][:name]) }
+      it { expect(User.last.surname).to eql(valid_update_user_params[:user][:surname]) }
     end
 
     context 'with error' do
@@ -68,9 +72,8 @@ RSpec.describe UsersController, type: :controller do
 
   describe '[DELETE] destroy' do
     context 'with successful response' do
-      let(:delete_user) { delete :destroy, params: valid_update_user_params }
-      # problem with change by(0)
-      it { expect { delete_user }.to change(User, :count).by(0) }
+      let(:delete_user) { delete :destroy, params: { id: user.id } }
+      it { expect { delete_user }.to change(User, :count).by(-1) }
       it { expect(delete_user).to redirect_to users_path }
     end
   end
