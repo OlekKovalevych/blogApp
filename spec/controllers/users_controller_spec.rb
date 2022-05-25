@@ -44,9 +44,11 @@ RSpec.describe UsersController, type: :controller do
   describe '[POST] #create' do
     context 'with successful response' do
       let(:create_user) { post :create, params: valid_user_params }
-      it { expect(User.last.name).to eql(valid_user_params[:user][:name]) }
-      it { expect(User.last.surname).to eql(valid_user_params[:user][:surname]) }
-      it { expect(create_user).to redirect_to user_path(id: User.last.id) }
+      it do
+        expect(create_user).to redirect_to user_path(id: User.last.id)
+        expect(User.last.name).to eq(valid_user_params.dig(:user, :name))
+        expect(User.last.surname).to eq(valid_user_params.dig(:user, :surname))
+      end
       it { expect { create_user }.to change(User, :count).by(1) }
     end
     context 'with error' do
@@ -60,8 +62,8 @@ RSpec.describe UsersController, type: :controller do
     context 'with successful response' do
       before { put :update, params: valid_update_user_params }
       it { expect(response).to redirect_to user_path(id: user.id) }
-      it { expect(User.last.name).to eql(valid_update_user_params[:user][:name]) }
-      it { expect(User.last.surname).to eql(valid_update_user_params[:user][:surname]) }
+      it { expect(User.last.name).to eq(valid_update_user_params.dig(:user, :name)) }
+      it { expect(User.last.surname).to eq(valid_update_user_params.dig(:user, :surname)) }
     end
 
     context 'with error' do

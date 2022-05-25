@@ -50,8 +50,8 @@ RSpec.describe ArticlesController, type: :controller do
 
       it { expect(create_request).to redirect_to user_articles_url(user_id: article.user_id) }
       it { expect { create_request }.to change(Article, :count).by(1) }
-      it { expect(Article.last.title).to eql(valid_article_params[:article][:title]) }
-      it { expect(Article.last.body).to eql(valid_article_params[:article][:body]) }
+      it { expect(Article.last.title).to eq(valid_article_params[:article][:title]) }
+      it { expect(Article.last.body).to eq(valid_article_params[:article][:body]) }
     end
 
     context 'with error' do
@@ -67,8 +67,8 @@ RSpec.describe ArticlesController, type: :controller do
         patch :update, params: valid_article_params
       end
       it { expect(response).to redirect_to user_articles_path(user_id: user.id) }
-      it { expect(Article.last.title).to eql(valid_article_params[:article][:title]) }
-      it { expect(Article.last.body).to eql(valid_article_params[:article][:body]) }
+      it { expect(Article.last.title).to eq(valid_article_params.dig(:article, :title)) }
+      it { expect(Article.last.body).to eq(valid_article_params.dig(:article, :body)) }
     end
     context 'with error' do
       before { patch :update, params: invalid_article_params }

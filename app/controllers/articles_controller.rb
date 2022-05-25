@@ -20,9 +20,9 @@ class ArticlesController < ApplicationController
   # GET /articles/1/edit
   def edit; end
 
-  # POST /articles or /articles.json
+  # POST /articles or /articles.jsonS
   def create
-    @article = Article.new(article_params.merge(user_id: @user.id))
+    @article = Article.new(create_article_params)
     respond_to do |format|
       if @article.save
         format.html { redirect_to user_articles_url(@user), notice: 'Article was successfully created.' }
@@ -57,6 +57,10 @@ class ArticlesController < ApplicationController
   end
 
   private
+
+  def create_article_params
+    article_params.merge(user_id: @user.id)
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_article
