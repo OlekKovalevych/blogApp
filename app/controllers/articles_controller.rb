@@ -22,7 +22,7 @@ class ArticlesController < ApplicationController
 
   # POST /articles or /articles.jsonS
   def create
-    @article = Article.new(create_article_params)
+    @article = ArticleService.new.check_title_and_body(Article.new(create_article_params))
     respond_to do |format|
       if @article.save
         format.html { redirect_to user_articles_url(@user), notice: 'Article was successfully created.' }
