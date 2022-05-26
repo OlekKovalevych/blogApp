@@ -36,6 +36,6 @@ class ArticleService
   end
 
   def word_for_capitalize?(word)
-    WORDS_FOR_CAPITALIZE[0].eql?(word.downcase) || WORDS_FOR_CAPITALIZE[1].eql?(word.downcase)
+    WORDS_FOR_CAPITALIZE.index(word) != nil
   end
 end
