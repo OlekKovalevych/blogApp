@@ -1,24 +1,41 @@
 # frozen_string_literal: true
 
 class ArticleService
-  SEARCH_STRINGS = %w[frontend backend qa developer].freeze
-  STRING_FOR_CAPITALIZE = %w[ruby rails].freeze
+  FORBIDDEN_WORDS = %w[frontend backend qa developer].freeze
+  WORDS_FOR_CAPITALIZE = %w[ruby rails].freeze
   # frontend, backend, qa, developer
 
-  def check_title_and_body(article)
-    article.title = refactor_string(article.title)
-    article.body = refactor_string(article.body)
+  def initialize(article:)
+    @article = article
+  end
+
+  def call
+    article.title = refactor_text(text: article.title)
+    article.body = refactor_text(text: article.body)
     article
   end
 
   private
 
-  def refactor_string(string)
-    buffer = string.split(' ')
-    buffer.each do |word|
-      word.capitalize! if STRING_FOR_CAPITALIZE.include?(word)
+  attr_accessor :article
+
+  def refactor_text(text:)
+    text = text.split(' ')
+    text = downcase(text) - FORBIDDEN_WORDS
+    capitalize(text).join(' ')
+  end
+
+  def downcase(words)
+    words.map(&:downcase)
+  end
+
+  def capitalize(words)
+    words.map do |word|
+      word_for_capitalize?(word) ? word.capitalize! : word
     end
-    buffer -= SEARCH_STRINGS
-    buffer.join(' ')
+  end
+
+  def word_for_capitalize?(word)
+    WORDS_FOR_CAPITALIZE[0].eql?(word.downcase) || WORDS_FOR_CAPITALIZE[1].eql?(word.downcase)
   end
 end
