@@ -4,7 +4,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :surname, presence: true
 
-  def admin?
-
+  def admin?(user)
+    user.is_admin
   end
 end
