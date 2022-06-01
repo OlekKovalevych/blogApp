@@ -2,7 +2,6 @@
 
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
-  # i tutaj tę linijkę bym wyrzucił do poszczególnych kontrolerów
   before_action :authenticate_user!, only: %i[create new destroy]
 
   protected
