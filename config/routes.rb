@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   # devise_for :users
 
+  root to: 'users#index'
   devise_for :users
   resources :users do
     resources :articles
