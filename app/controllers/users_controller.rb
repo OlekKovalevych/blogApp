@@ -2,7 +2,8 @@
 
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
-  before_action :not_admin, only: %i[show edit update destroy]
+  before_action :not_login_user, only: %i[edit update destroy]
+  before_action :not_admin, only: %i[edit update destroy]
   before_action :authenticate_user!, only: %i[create new destroy]
   # GET /users or /users.json
 
@@ -67,7 +68,11 @@ class UsersController < ApplicationController
   end
 
   def not_admin
-    redirect_to users_url, notice: 'You are not admin' unless User.find(:current_user.id).is_admin?
+    redirect_to users_url, notice: 'You are not admin' unless current_user.is_admin?
+  end
+
+  def not_login_user
+    redirect_to new_user_session_url, notice: 'You are not log in user' if current_user.nil?
   end
 
   # Only allow a list of trusted parameters through.
