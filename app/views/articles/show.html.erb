@@ -1,20 +1,32 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>User:</strong>
-  <%= "#{@user.name}    #{@user.surname}"%>
-</p>
-<p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @article.title %>
-</p>
-
-<p>
-  <strong>Body:</strong>
-  <%= @article.body %>
-</p>
-
-<%= link_to 'Edit', edit_user_article_path(@user,@article) %> |
-<%= link_to 'Back', user_articles_path %>
+<p id="notice"><%= notice %></p>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <p>
+        <strong>User:</strong>
+        <%= "#{@user.name}    #{@user.surname}" %>
+      </p>
+      <p>
+        <strong>Title:</strong>
+        <%= @article.title.capitalize %>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <p>
+        <strong>Body:</strong>
+        <%= @article.body.capitalize %>
+      </p>
+    </div>
+  </div>
+  <div class="btn  btn-outline-info">
+    <%= link_to 'Edit', edit_user_article_path(@user, @article) %>
+  </div>
+  <div class="btn  btn-outline-info">
+    <%= link_to 'Back', user_articles_path %>
+  </div>
+</div>
+</body>

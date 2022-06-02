@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
+<body>
 <div class="container">
   <div class="row">
     <div class="col-12">
@@ -8,7 +9,6 @@
       </p>
     </div>
   </div>
-
   <div class="row">
     <div class="col-12">
       <p>
@@ -17,12 +17,17 @@
       </p>
     </div>
   </div>
+  <div class="btn  btn-outline-info">
+    <%= link_to 'Edit', edit_user_path(@user) %> |
+  </div>
+  <div class="btn  btn-outline-info">
+    <%= link_to 'Show All Articles', user_articles_path(@user) %> |
+  </div>
+  <div class="btn  btn-outline-info">
+    <%= link_to 'Create Article', new_user_article_path(@user) %> |
+  </div>
+  <div class="btn  btn-outline-info">
+    <%= link_to 'Back', users_path %>
+  </div>
 </div>
-<div class="btn  btn-outline-info">
-  <%= link_to 'Edit', edit_user_path(@user) %> |
-  <%= link_to 'Show All Articles', user_articles_path(@user) %> |
-  <%= link_to 'Create Article', new_user_article_path(@user) %> |
-  <%= link_to 'Back', users_path %>
-</div>
-
-</div>
+</body>
