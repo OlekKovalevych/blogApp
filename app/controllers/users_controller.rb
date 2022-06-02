@@ -2,8 +2,10 @@
 
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
+  before_action :not_admin, only: %i[show edit update destroy]
   before_action :authenticate_user!, only: %i[create new destroy]
   # GET /users or /users.json
+
   def index
     @users = User.all
   end
@@ -24,7 +26,6 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
-
     respond_to do |format|
       if @user.save
         format.html { redirect_to user_url(@user), notice: 'User was successfully created.' }
@@ -51,12 +52,10 @@ class UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
-    if @user.is_admin?
-      @user.destroy
-      respond_to do |format|
-        format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-        format.json { head :no_content }
-      end
+    @user.destroy
+    respond_to do |format|
+      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 
@@ -65,6 +64,10 @@ class UsersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def not_admin
+    redirect_to users_url, notice: 'You are not admin' unless User.find(:current_user.id).is_admin?
   end
 
   # Only allow a list of trusted parameters through.
