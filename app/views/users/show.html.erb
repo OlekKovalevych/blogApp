@@ -1,18 +1,28 @@
 <p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <p>
+        <strong>Name:</strong>
+        <%= @user.name %>
+      </p>
+    </div>
+  </div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+  <div class="row">
+    <div class="col-12">
+      <p>
+        <strong>Surname:</strong>
+        <%= @user.surname %>
+      </p>
+    </div>
+  </div>
+</div>
+<div class="btn  btn-outline-info">
+  <%= link_to 'Edit', edit_user_path(@user) %> |
+  <%= link_to 'Show All Articles', user_articles_path(@user) %> |
+  <%= link_to 'Create Article', new_user_article_path(@user) %> |
+  <%= link_to 'Back', users_path %>
+</div>
 
-<p>
-  <strong>Surname:</strong>
-  <%= @user.surname %>
-</p>
-
-
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Show All Articles', user_articles_path(@user) %> |
-<%= link_to 'Create Article', new_user_article_path(@user) %> |
-<%= link_to 'Back', users_path %>
+</div>
