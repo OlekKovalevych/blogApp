@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :authenticate_user!, only: %i[create new destroy]
   before_action :set_user, only: %i[show edit update destroy]
   before_action :not_login_user, only: %i[edit update destroy]
   before_action :not_admin, only: %i[edit update destroy]
-  before_action :authenticate_user!, only: %i[create new destroy]
   # GET /users or /users.json
 
   def index

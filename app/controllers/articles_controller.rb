@@ -4,6 +4,7 @@ class ArticlesController < ApplicationController
   before_action :authenticate_user!, only: %i[create new updta edit destroy]
   before_action :set_article, only: %i[show edit update destroy]
   before_action :set_user
+  before_action :not_admin, only: %i[edit destroy]
 
   # GET /articles or /articles.json
   def index
@@ -70,6 +71,10 @@ class ArticlesController < ApplicationController
 
   def set_user
     @user = User.find(params[:user_id])
+  end
+
+  def not_admin
+    redirect_to users_url, notice: 'You are not admin' unless current_user.is_admin?
   end
 
   # Only allow a list of trusted parameters through.
